@@ -1,0 +1,923 @@
+{
+	"info": {
+		"_postman_id": "5630084b-5c5d-460f-ad94-f7c89be03141",
+		"name": "Groups_API_Automation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Token",
+			"item": [
+				{
+					"name": "Token FCA Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"SAuthorizationID\", jsonData.sessionTokens.idToken);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"value": "b9mmhg72xV9AuP1NIw0BE4k2lcJTOxNA2MoKuHpL",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"rpritchett@fieldca.com\",\r\n  \"password\": \"FCA*Adm1n\",\r\n  \"clientId\": \"3ubsut97u1cemg39boi6rmfn2j\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/Users/authenticate",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Groups",
+			"item": [
+				{
+					"name": "/api/Groups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.globals.set(\"groupId\", jsonData.id);  \r",
+									"\r",
+									"//Status code verification\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{SAuthorizationID}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{groupName}}\",\n  \"description\": \"Test\",\n  \"parentGroupId\": \"\",\n  \"companyId\": \"030459fa-2870-48a5-9e8d-a62bb8296f44\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/Groups",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/Groups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{SAuthorizationID}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/Groups",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search groups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{SAuthorizationID}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/Groups/search",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Groups",
+								"search"
+							],
+							"query": [
+								{
+									"key": "CurrentPage",
+									"value": "-42382514",
+									"description": "This parameter is used to paginate response. The value must be positive number. e.g. start=100. You can not use both CurrentPage and Start together.",
+									"disabled": true
+								},
+								{
+									"key": "Start",
+									"value": "-42382514",
+									"description": "This parameter is used to paginate response. The value must be positive number. e.g. start=100",
+									"disabled": true
+								},
+								{
+									"key": "Limit",
+									"value": "-42382514",
+									"description": "This parameter is used to paginate response. The value must be positive number. e.g. limit=100",
+									"disabled": true
+								},
+								{
+									"key": "ClientSidePagination",
+									"value": "true",
+									"description": "This parameter is used to override pagination. The value must be true/false. e.g. clientsidepagination=true",
+									"disabled": true
+								},
+								{
+									"key": "IncludePaging",
+									"value": "true",
+									"description": "This parameter is used to include total record count in response. The value must be true/false. e.g. includepaging=true",
+									"disabled": true
+								},
+								{
+									"key": "FilterCriteria",
+									"value": "Ut commodo elit ut Lorem",
+									"description": "This parameter is used to filter response with specified criteria. e.g. flt[0][fld]=description&flt[0][op]=contains&flt[0][val]=read",
+									"disabled": true
+								},
+								{
+									"key": "SortCriteria",
+									"value": "Ut commodo elit ut Lorem",
+									"description": "This parameter is used to sort response with specified criteria. e.g. sort[0][fld]=name&sort[0][dir]=asc",
+									"disabled": true
+								},
+								{
+									"key": "Expand",
+									"value": "Ut commodo elit ut Lorem",
+									"description": "This parameter is used to include child resources as nested object in the response. You can provide multiple values by comma seperated. e.g. expand=company,client",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "{group Id}",
+			"item": [
+				{
+					"name": "permissions",
+					"item": [
+						{
+							"name": "/api/Groups/:groupId/permissions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.globals.set(\"groupPermissionId\", jsonData.id);  \r",
+											"\r",
+											"pm.globals.set(\"gpTransactionId\", jsonData.metadata.transactionId); \r",
+											"\r",
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{SAuthorizationID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"permissionId\": \"45924e72-3f98-4d91-af05-bf40b92297ce\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Groups/{{groupId}}/permissions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Groups",
+										"{{groupId}}",
+										"permissions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Groups/:groupId/permissions/bulk",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{SAuthorizationID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"inserts\": [\n    {\n      \"permissionId\": \"urn:uuid:73b7e9f9-f5dc-2e28-3869-a0d874d425e1\"\n    },\n    {\n      \"permissionId\": \"6766f6c2-5ec9-455e-53b1-0c1c6122d8fe\"\n    }\n  ],\n  \"deletes\": [\n    {\n      \"id\": \"urn:uuid:071db023-c79f-3cb7-0b40-fafe16187e7f\",\n      \"metadata\": {\n        \"transactionId\": -10618879\n      }\n    },\n    {\n      \"id\": \"c1627681-54c5-71bc-2ad9-0f817c423ea5\",\n      \"metadata\": {\n        \"transactionId\": 84873795\n      }\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Groups/{{groupId}}/permissions/bulk",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Groups",
+										"{{groupId}}",
+										"permissions",
+										"bulk"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Groups/:groupId/permissions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{SAuthorizationID}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Groups/{{groupId}}/permissions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Groups",
+										"{{groupId}}",
+										"permissions"
+									],
+									"query": [
+										{
+											"key": "Expand",
+											"value": "Ut commodo elit ut Lorem",
+											"description": "This parameter is used to include child resources as nested object in the response. You can provide multiple values by comma seperated. e.g. expand=company,client",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search group permissions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{SAuthorizationID}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Groups/{{groupId}}/Permissions/search",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Groups",
+										"{{groupId}}",
+										"Permissions",
+										"search"
+									],
+									"query": [
+										{
+											"key": "CurrentPage",
+											"value": "-42382514",
+											"description": "This parameter is used to paginate response. The value must be positive number. e.g. start=100. You can not use both CurrentPage and Start together.",
+											"disabled": true
+										},
+										{
+											"key": "Start",
+											"value": "-42382514",
+											"description": "This parameter is used to paginate response. The value must be positive number. e.g. start=100",
+											"disabled": true
+										},
+										{
+											"key": "Limit",
+											"value": "-42382514",
+											"description": "This parameter is used to paginate response. The value must be positive number. e.g. limit=100",
+											"disabled": true
+										},
+										{
+											"key": "ClientSidePagination",
+											"value": "true",
+											"description": "This parameter is used to override pagination. The value must be true/false. e.g. clientsidepagination=true",
+											"disabled": true
+										},
+										{
+											"key": "IncludePaging",
+											"value": "true",
+											"description": "This parameter is used to include total record count in response. The value must be true/false. e.g. includepaging=true",
+											"disabled": true
+										},
+										{
+											"key": "FilterCriteria",
+											"value": "Ut commodo elit ut Lorem",
+											"description": "This parameter is used to filter response with specified criteria. e.g. flt[0][fld]=description&flt[0][op]=contains&flt[0][val]=read",
+											"disabled": true
+										},
+										{
+											"key": "SortCriteria",
+											"value": "Ut commodo elit ut Lorem",
+											"description": "This parameter is used to sort response with specified criteria. e.g. sort[0][fld]=name&sort[0][dir]=asc",
+											"disabled": true
+										},
+										{
+											"key": "Expand",
+											"value": "Ut commodo elit ut Lorem",
+											"description": "This parameter is used to include child resources as nested object in the response. You can provide multiple values by comma seperated. e.g. expand=company,client",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Groups/:groupId/permissions/:id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{SAuthorizationID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"transactionId\": {{gpTransactionId}}\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Groups/{{groupId}}/permissions/{{groupPermissionId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Groups",
+										"{{groupId}}",
+										"permissions",
+										"{{groupPermissionId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "/api/Groups/:groupId/users",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.globals.set(\"userPermissionId\", jsonData.id);  \r",
+											"\r",
+											"pm.globals.set(\"guTransactionId\", jsonData.metadata.transactionId); \r",
+											"\r",
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{SAuthorizationID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"userId\": \"00ecbe0c-9317-4b1c-8bfd-b4814679f66c\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Groups/{{groupId}}/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Groups",
+										"{{groupId}}",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Groups/:groupId/users",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{SAuthorizationID}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Groups/{{groupId}}/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Groups",
+										"{{groupId}}",
+										"users"
+									],
+									"query": [
+										{
+											"key": "Expand",
+											"value": "Ut commodo elit ut Lorem",
+											"description": "This parameter is used to include child resources as nested object in the response. You can provide multiple values by comma seperated. e.g. expand=company,client",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/Groups/:groupId/users/:id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{SAuthorizationID}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"transactionId\": {{guTransactionId}}\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Groups/{{groupId}}/users/{{userPermissionId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Groups",
+										"{{groupId}}",
+										"users",
+										"{{userPermissionId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "{id}",
+			"item": [
+				{
+					"name": "/api/Groups/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.globals.set(\"groupTransactionId\", jsonData.metadata.transactionId); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{SAuthorizationID}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/Groups/{{groupId}}?Expand=metadata",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Groups",
+								"{{groupId}}"
+							],
+							"query": [
+								{
+									"key": "Expand",
+									"value": "metadata",
+									"description": "This parameter is used to include child resources as nested object in the response. You can provide multiple values by comma seperated. e.g. expand=company,client"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/Groups/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.globals.set(\"groupTransactionId\", jsonData.metadata.transactionId); \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{SAuthorizationID}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"transactionId\": {{groupTransactionId}}\n  },\n  \"name\": \"{{groupName}}-update\",\n  \"description\": \"Test Update\",\n  \"parentGroupId\": \"\",\n  \"companyId\": \"030459fa-2870-48a5-9e8d-a62bb8296f44\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/Groups/{{groupId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Groups",
+								"{{groupId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/Groups/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{SAuthorizationID}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"transactionId\": {{groupTransactionId}}\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/Groups/{{groupId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Groups",
+								"{{groupId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
